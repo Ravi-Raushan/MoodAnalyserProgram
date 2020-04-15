@@ -32,11 +32,32 @@ public class MoodAnalyserFactory {
         }
         catch (IllegalAccessException e)
         {
-            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.CLASS_ILLEGAL_ACCESS, "CLASS_ILLEGAL_ACCESS");
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.CLASS_ILLEGAL_ACCESS, "CLASS "+constructor+ " ACCESS ISSUE");
         }
         catch (InvocationTargetException e)
         {
             throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.CLASS_INVOCATION_ERROR, "CLASS_INVOCATION_ERROR");
+        }
+    }
+    public static Object invokeMethod(Object objectClass, String methodName) throws MoodAnalyserException
+    {
+        try
+        {
+            return objectClass.getClass().getMethod(methodName).invoke(objectClass);
+        }
+        catch (NoSuchMethodException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD, methodName+" NO_SUCH_METHOD");
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.METHOD_ILLEGAL_ACCESS,
+                    "METHOD_ILLEGAL_ACCESS "+methodName);
+        }
+        catch (InvocationTargetException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.METHOD_INVOCATION_ERROR,
+                    "METHOD_INVOCATION_ERROR "+methodName);
         }
     }
 }
