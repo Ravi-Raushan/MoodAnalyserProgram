@@ -1,5 +1,9 @@
 package com.moodAnalyser;
-// ******  WELCOME TO MOOD ANALYSER PROGRAM  *********
-public class MoodAnalyser {
 
+public class MoodAnalyser {
+    public String analyseMood(String message) {
+        if (message.contains("sad"))
+            return "SAD";
+        return "HAPPY";
+    }
 }
