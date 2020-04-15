@@ -1,11 +1,11 @@
 package com.moodAnalyser;
 
-public class MoodAnalyserRefactor {
+public class MoodAnalyser {
     String message;
-    public MoodAnalyserRefactor(){
+    public MoodAnalyser(){
 
     }
-    public MoodAnalyserRefactor(String message){
+    public MoodAnalyser(String message){
         this.message=message;
     }
     public String analyseMood() throws MoodAnalyserException {

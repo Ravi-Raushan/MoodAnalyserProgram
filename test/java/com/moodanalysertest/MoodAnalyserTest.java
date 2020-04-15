@@ -7,11 +7,11 @@ import org.junit.Test;
 
 import java.lang.reflect.Constructor;
 
-public class MoodAnalyserRefactorTest {
+public class MoodAnalyserTest {
     @Test
     public void givenHappyMessageUsingReflationWhenProperShouldReturnHappyMood(){
         try {
-            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyserRefactor",String.class);
+            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
               Object obj = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor,
                                                   "i am in happy mood");
               Object mood = MoodAnalyserFactory.invokeMethod(obj,"analyseMood");
@@ -23,7 +23,7 @@ public class MoodAnalyserRefactorTest {
     @Test
     public void givenHappyMessageWhenImproperMethodShouldThrowMoodAnalyserException(){
         try {
-            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyserRefactor",String.class);
+            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
             Object obj = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor,
                     "i am in happy mood");
             Object mood = MoodAnalyserFactory.invokeMethod(obj,"analysisOfMood");
