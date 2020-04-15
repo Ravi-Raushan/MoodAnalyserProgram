@@ -11,7 +11,7 @@ public class MoodAnalyserTest {
     public void givenMoodAnalyserClassNameShouldReturnMoodAnalyserObject(){
         MoodAnalyser moodAnalyser = new MoodAnalyser();
         try {
-            MoodAnalyser anotherMoodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MoodAnalyser");
+            MoodAnalyser anotherMoodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MoodAnalyser",String.class);
             Assert.assertEquals(true,  moodAnalyser.isEqualsObject(anotherMoodAnalyserObject));
         } catch (MoodAnalyserException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -20,7 +20,7 @@ public class MoodAnalyserTest {
     @Test
     public void givenClassNameImproperShouldThrowMoodAnalyserException() {
         try {
-            MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MindAnalyser");
+            MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MindAnalyser",String.class);
         } catch (MoodAnalyserException | IllegalAccessException | InstantiationException e) {
             Assert.assertEquals("NO_SUCH_CLASS_ERROR", e.getMessage());
         }
