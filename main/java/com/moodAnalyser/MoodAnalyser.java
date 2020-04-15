@@ -19,4 +19,9 @@ public class MoodAnalyser {
             throw  new MoodAnalyserException(MoodAnalyserException.ExceptionType.ENTERED_NULL,"NULL MOOD");
         }
     }
+    public boolean isEqualsObject(Object another){
+        if (this.getClass().equals(another.getClass()))
+            return true;
+        return false;
+    }
 }
