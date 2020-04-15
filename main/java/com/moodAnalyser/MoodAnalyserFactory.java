@@ -5,29 +5,38 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
 
-    public static MoodAnalyser createMoodAnalyserObject(String className,Class parameterClass) throws MoodAnalyserException, IllegalAccessException, InstantiationException {
-        try {
-            Class<?> moodAnalyserClass = Class.forName(className);
-            Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(parameterClass);
-            return (MoodAnalyser) moodAnalyserClass.newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_CLASS, "NO_SUCH_CLASS_ERROR");
-        } catch (NoSuchMethodException e) {
+    public static Constructor<?> getThisConstructor(String className,Class...param) throws MoodAnalyserException {
+        try
+        {
+            Class getClass = Class.forName(className);
+            return getClass.getConstructor(param);
+        }
+        catch (NoSuchMethodException e)
+        {
             throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD, "NO_SUCH_METHOD_ERROR");
+        }
+        catch (ClassNotFoundException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_CLASS, "NO_SUCH_CLASS_ERROR");
         }
     }
-    public static MoodAnalyser createMoodAnalyserObjectWithParametrizeConstructor(String className,Class parameterClass) throws MoodAnalyserException, IllegalAccessException, InstantiationException {
-        try {
-            Class<?> moodAnalyserClass = Class.forName(className);
-            Constructor<?> moodConstructor = moodAnalyserClass.getConstructor(parameterClass);
-            return (MoodAnalyser) moodConstructor.newInstance("i am in happy mood");
-        } catch (ClassNotFoundException e) {
-            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_CLASS, "NO_SUCH_CLASS_ERROR");
-        } catch (NoSuchMethodException e) {
-            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD, "NO_SUCH_METHOD_ERROR");
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+
+    public static Object createMoodAnalyserObject(Constructor constructor, Object...message) throws MoodAnalyserException {
+        try
+        {
+            return constructor.newInstance(message);
         }
-        return null;
+        catch (InstantiationException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.INSTANT_CREATION_ERROR, "INSTANT_CREATION_ERROR");
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.CLASS_ILLEGAL_ACCESS, "CLASS_ILLEGAL_ACCESS");
+        }
+        catch (InvocationTargetException e)
+        {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.CLASS_INVOCATION_ERROR, "CLASS_INVOCATION_ERROR");
+        }
     }
 }
