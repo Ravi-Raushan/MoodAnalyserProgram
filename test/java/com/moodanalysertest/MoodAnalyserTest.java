@@ -11,7 +11,8 @@ public class MoodAnalyserTest {
     public void givenMoodAnalyserClassNameShouldReturnMoodAnalyserObject(){
         MoodAnalyser moodAnalyser = new MoodAnalyser();
         try {
-            MoodAnalyser anotherMoodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MoodAnalyser",String.class);
+            MoodAnalyser anotherMoodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObjectWithParametrizeConstructor(
+                                                  "com.moodAnalyser.MoodAnalyser",String.class);
             Assert.assertEquals(true,  moodAnalyser.isEqualsObject(anotherMoodAnalyserObject));
         } catch (MoodAnalyserException | IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
@@ -20,7 +21,7 @@ public class MoodAnalyserTest {
     @Test
     public void givenClassNameImproperShouldThrowMoodAnalyserException() {
         try {
-            MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MindAnalyser",String.class);
+            MoodAnalyserFactory.createMoodAnalyserObjectWithParametrizeConstructor("com.moodAnalyser.MindAnalyser",String.class);
         } catch (MoodAnalyserException | IllegalAccessException | InstantiationException e) {
             Assert.assertEquals("NO_SUCH_CLASS_ERROR", e.getMessage());
         }
@@ -28,7 +29,8 @@ public class MoodAnalyserTest {
     @Test
     public void givenImproperConstructorParameterShouldThrowMoodAnalyserException() {
         try {
-            MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyserObject("com.moodAnalyser.MoodAnalyser",Integer.class);
+            MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyserObjectWithParametrizeConstructor(
+                                              "com.moodAnalyser.MoodAnalyser",Integer.class);
         } catch (MoodAnalyserException | IllegalAccessException | InstantiationException e) {
             Assert.assertEquals("NO_SUCH_METHOD_ERROR", e.getMessage());
         }
