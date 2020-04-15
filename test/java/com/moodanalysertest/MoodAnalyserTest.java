@@ -1,7 +1,7 @@
 package com.moodanalysertest;
 
 import com.moodAnalyser.MoodAnalyserException;
-import com.moodAnalyser.MoodAnalyserFactory;
+import com.moodAnalyser.MoodAnalyserReflector;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,10 +11,10 @@ public class MoodAnalyserTest {
     @Test
     public void givenHappyMessageUsingReflationWhenProperShouldReturnHappyMood(){
         try {
-            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
-              Object obj = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor,
+            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
+              Object obj = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,
                                                   "i am in happy mood");
-              Object mood = MoodAnalyserFactory.invokeMethod(obj,"analyseMood");
+              Object mood = MoodAnalyserReflector.invokeMethod(obj,"analyseMood");
              Assert.assertEquals("HAPPY",mood);
         } catch (MoodAnalyserException e) {
             e.printStackTrace();
@@ -23,10 +23,10 @@ public class MoodAnalyserTest {
     @Test
     public void givenHappyMessageWhenImproperMethodShouldThrowMoodAnalyserException(){
         try {
-            Constructor moodAnalyserConstructor = MoodAnalyserFactory.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
-            Object obj = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor,
+            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
+            Object obj = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,
                     "i am in happy mood");
-            Object mood = MoodAnalyserFactory.invokeMethod(obj,"analysisOfMood");
+            Object mood = MoodAnalyserReflector.invokeMethod(obj,"analysisOfMood");
         } catch (MoodAnalyserException e) {
             Assert.assertEquals("analysisOfMood NO_SUCH_METHOD",e.getMessage());
         }
