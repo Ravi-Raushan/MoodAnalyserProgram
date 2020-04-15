@@ -9,26 +9,26 @@ import java.lang.reflect.Constructor;
 
 public class MoodAnalyserTest {
     @Test
-    public void givenHappyMessageUsingReflationWhenProperShouldReturnHappyMood(){
+    public void SetHappyMessageWithReflectorShouldReturnHAPPY() {
         try {
-            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
-              Object obj = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,
-                                                  "i am in happy mood");
-              Object mood = MoodAnalyserReflector.invokeMethod(obj,"analyseMood");
-             Assert.assertEquals("HAPPY",mood);
+            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser", String.class);
+            Object object = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,"I am in sad mood");
+            MoodAnalyserReflector.setField(object, "message", "I m in happy Mood");
+            Object mood = MoodAnalyserReflector.invokeMethod(object, "analyseMood");
+            Assert.assertEquals("HAPPY", mood);
         } catch (MoodAnalyserException e) {
             e.printStackTrace();
         }
     }
-    @Test
-    public void givenHappyMessageWhenImproperMethodShouldThrowMoodAnalyserException(){
-        try {
-            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser",String.class);
-            Object obj = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,
-                    "i am in happy mood");
-            Object mood = MoodAnalyserReflector.invokeMethod(obj,"analysisOfMood");
-        } catch (MoodAnalyserException e) {
-            Assert.assertEquals("analysisOfMood NO_SUCH_METHOD",e.getMessage());
+        @Test
+        public void SetFieldWhenImproperShouldThrowExceptionWithNoSuchField() {
+            try {
+                Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser", String.class);
+                Object object = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,"I am in sad mood");
+                MoodAnalyserReflector.setField(object, "message1", "I m in happy Mood");
+                Object mood = MoodAnalyserReflector.invokeMethod(object, "analyseMood");
+            } catch (MoodAnalyserException e) {
+                Assert.assertEquals("message1 NO_SUCH_FIELD", e.getMessage());
+            }
         }
     }
-}
