@@ -13,9 +13,9 @@ public class MoodAnalyserTest {
         try {
             Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser", String.class);
             Object object = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,"I am in sad mood");
-            MoodAnalyserReflector.setField(object, "message", "I m in happy Mood");
+            MoodAnalyserReflector.setField(object, "message", "I m in sad Mood");
             Object mood = MoodAnalyserReflector.invokeMethod(object, "analyseMood");
-            Assert.assertEquals("HAPPY", mood);
+            Assert.assertEquals("SAD", mood);
         } catch (MoodAnalyserException e) {
             e.printStackTrace();
         }
@@ -31,4 +31,15 @@ public class MoodAnalyserTest {
                 Assert.assertEquals("message1 NO_SUCH_FIELD", e.getMessage());
             }
         }
+    @Test
+    public void SettingNullMessageWithReflectorShouldThrowException() {
+        try {
+            Constructor moodAnalyserConstructor = MoodAnalyserReflector.getThisConstructor("com.moodAnalyser.MoodAnalyser", String.class);
+            Object object = MoodAnalyserReflector.createMoodAnalyserObject(moodAnalyserConstructor,"I am in sad mood");
+            MoodAnalyserReflector.setField(object, "message", null );
+            Object mood = MoodAnalyserReflector.invokeMethod(object, "analyseMood");
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals("METHOD_INVOCATION_ERROR analyseMood", e.getMessage());
+        }
+    }
     }
